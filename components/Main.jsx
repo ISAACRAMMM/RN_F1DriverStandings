@@ -9,7 +9,7 @@ import {
   TouchableHighlight,
   ActivityIndicator,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { getDriversData, getDriverDetailsData } from "../lib/pilotos";
 
@@ -26,29 +26,44 @@ export function Main() {
       setDrivers(drivers);
     });
   }, []);
+
+  const [maxPoints, setMaxPoints] = useState([]);
+
+  useEffect(() => {
+    if (drivers.length > 0) {
+      setMaxPoints(drivers[0].points);
+    }
+  }, [drivers]);
+
   return (
-    <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
-      
+
+    <SafeAreaView className='mb-8'>
+    <View style={{paddingBottom: insets.bottom}}>
+
+
       {drivers.length === 0 ? (
         <ActivityIndicator />
       ) : (
-       
+
         <FlatList
+          className=''
           data={drivers}
-          keyExtractor={drivers =>  drivers.givenName}
+          keyExtractor={drivers => drivers.givenName}
           renderItem={({ item, index }) => <AnimatedDriversList drivers={item} index={index} />}
         >
+
+
           {drivers.map((drivers) => (
-            <DriversList key={drivers.givenName} drivers={drivers} />
+            <DriversList key={drivers.givenName} drivers={drivers} maxPoints={maxPoints} />
           ))}
         </FlatList>
       )}
     </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {},
   name: {
     fontSize: 24,
     color: "black",
