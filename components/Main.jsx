@@ -1,21 +1,19 @@
 import {
   StyleSheet,
-  Text,
   View,
-  Image,
-  ScrollView,
   FlatList,
-  Button,
-  TouchableHighlight,
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { useEffect, useState } from "react";
+import { Link } from "expo-router";
+
 
 import { getDriversData, getDriverDetailsData } from "../lib/pilotos";
-
-
-import { useEffect, useState } from "react";
+import { Logo } from "./Logo";
 import { DriversList, AnimatedDriversList } from "./DriversList";
+import { CircleInfoIcon } from "./Icons";
+import { Screen } from "./Screen";
 
 export function Main() {
   const [drivers, setDrivers] = useState([]);
@@ -37,29 +35,31 @@ export function Main() {
 
   return (
 
-    <SafeAreaView className='mb-8'>
-    <View style={{paddingBottom: insets.bottom}}>
+  <Screen>
+      <View style={{ paddingBottom: insets.bottom }}>
+       
 
 
-      {drivers.length === 0 ? (
-        <ActivityIndicator />
-      ) : (
+        {drivers.length === 0 ? (
+          <ActivityIndicator />
+        ) : (
 
-        <FlatList
-          className=''
-          data={drivers}
-          keyExtractor={drivers => drivers.givenName}
-          renderItem={({ item, index }) => <AnimatedDriversList drivers={item} index={index} />}
-        >
+          <FlatList
+            className=''
+            data={drivers}
+            keyExtractor={drivers => drivers.givenName}
+            renderItem={({ item, index }) => <AnimatedDriversList drivers={item} index={index} />}
+          >
 
 
-          {drivers.map((drivers) => (
-            <DriversList key={drivers.givenName} drivers={drivers} maxPoints={maxPoints} />
-          ))}
-        </FlatList>
-      )}
-    </View>
-    </SafeAreaView>
+            {drivers.map((drivers) => (
+              <DriversList key={drivers.givenName} drivers={drivers} maxPoints={maxPoints} />
+            ))}
+          </FlatList>
+        )}
+      </View>
+      </Screen>
+    
   );
 }
 

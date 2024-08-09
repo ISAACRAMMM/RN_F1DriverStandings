@@ -18,14 +18,12 @@ import { Logo } from "./components/Logo";
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <View style={styles.container}>
-        <View className="items-center top-2">
-          <Logo />
-        </View>
+    <SafeAreaProvider >
+      <View  style={styles.container}>
+      
         <StatusBar  />
 
-        <Main className=''/>
+        <Main  />
       </View>
     </SafeAreaProvider>
   );

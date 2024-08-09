@@ -1,12 +1,18 @@
 import { useEffect, useState, useRef } from "react";
-import { View, StyleSheet, Text, Image, Animated } from "react-native";
+import { View, StyleSheet, Text, Image, Animated, Pressable } from "react-native";
 import { Points } from "./Points";
+import { Link } from "expo-router";
+import { styled } from "nativewind";
+
+const StyledPressable = styled(Pressable)
 
 export function DriversList({ drivers, maxPoints }) {
   return (
+    <Link asChild href={`/${drivers.driverId}`}>
+    <StyledPressable className="active:opacity-70 mb-1 " >
     <View
-      className="top-4 mb-2 ml-5 container flex "
-      key={drivers.slug}
+      className="top-3 mb-4 ml-5 container "
+      key={drivers.driverId}
       style={styles.card}
     >
       <View className='flex-row'>
@@ -18,11 +24,17 @@ export function DriversList({ drivers, maxPoints }) {
         <Text> </Text>
       </View>
 
-      <View className='flex-row'> 
-        <Points  points={drivers.points} maxPoints={maxPoints} />
-        <Text className='text-base'>{drivers.constructors}</Text>
+      <View className='   flex-row  justify-between items-center mr-8'>
+        <View className='' > 
+          <Points points={drivers.points} maxPoints={maxPoints} />
+        </View>
+        <View className='items-end'>
+          <Text className='text-base '>{drivers.constructors}</Text>
+        </View>
       </View>
     </View>
+    </StyledPressable>
+    </Link>
   );
 }
 
